@@ -1,2 +1,2 @@
-food,450.0,biryani,7/04/2026
+food,530.0,narmada,7/04/2026
 travel,1020.0,temple,7/04/2026

@@ -42,8 +42,10 @@ public class expensetracker {
             System.out.println("\nSMART EXPENSE TRACKER");
             System.out.println("1. Add Expense");
             System.out.println("2. View Expenses");
-            System.out.println("3. View Insights");
-            System.out.println("4. Exit");
+            System.out.println("3. Delete Expense");
+            System.out.println("4. Edit Expense");
+            System.out.println("5. View Insights");
+            System.out.println("6. Exit");
 
             System.out.print("Enter choice: ");
             int choice = sc.nextInt();
@@ -60,12 +62,20 @@ public class expensetracker {
                     break;
 
                 case 3:
+                    deleteExpense();
+                    break;
+
+                case 4:
+                    editExpense();
+                    break;
+
+                case 5:
                     totalSpending();
                     categorySpending();
                     aiInsights();
                     break;
 
-                case 4:
+                case 6:
                     System.out.println("Exiting...");
                     return;
 
@@ -85,20 +95,25 @@ public class expensetracker {
         double amount = sc.nextDouble();
         sc.nextLine();
 
+        // ✅ Validation
+        if (amount <= 0) {
+            System.out.println("Invalid amount!");
+            return;
+        }
+
         System.out.print("Enter Category: ");
         String category = sc.nextLine();
 
         System.out.print("Enter Date: ");
         String date = sc.nextLine();
 
-        Expense e = new Expense(name, amount, category, date);
-        expenses.add(e);
+        expenses.add(new Expense(name, amount, category, date));
         saveExpenses();
 
         System.out.println("✅ Expense Added!");
     }
 
-    // 🔹 View Expenses
+    // 🔹 View Expenses (with index)
     static void viewExpenses() {
 
         if (expenses.isEmpty()) {
@@ -108,8 +123,70 @@ public class expensetracker {
 
         System.out.println("\n--- Expense List ---");
 
-        for (Expense e : expenses) {
-            e.display();
+        for (int i = 0; i < expenses.size(); i++) {
+            System.out.print(i + " -> ");
+            expenses.get(i).display();
+        }
+    }
+
+    // 🔹 Delete Expense
+    static void deleteExpense() {
+
+        if (expenses.isEmpty()) {
+            System.out.println("No expenses to delete.");
+            return;
+        }
+
+        viewExpenses();
+
+        System.out.print("Enter index to delete: ");
+        int index = sc.nextInt();
+
+        if (index >= 0 && index < expenses.size()) {
+            expenses.remove(index);
+            saveExpenses();
+            System.out.println("✅ Expense deleted!");
+        } else {
+            System.out.println("Invalid index!");
+        }
+    }
+
+    // 🔹 Edit Expense
+    static void editExpense() {
+
+        if (expenses.isEmpty()) {
+            System.out.println("No expenses to edit.");
+            return;
+        }
+
+        viewExpenses();
+
+        System.out.print("Enter index to edit: ");
+        int index = sc.nextInt();
+        sc.nextLine();
+
+        if (index >= 0 && index < expenses.size()) {
+
+            Expense e = expenses.get(index);
+
+            System.out.print("Enter new name: ");
+            e.name = sc.nextLine();
+
+            System.out.print("Enter new amount: ");
+            e.amount = sc.nextDouble();
+            sc.nextLine();
+
+            System.out.print("Enter new category: ");
+            e.category = sc.nextLine();
+
+            System.out.print("Enter new date: ");
+            e.date = sc.nextLine();
+
+            saveExpenses();
+
+            System.out.println("✅ Expense updated!");
+        } else {
+            System.out.println("Invalid index!");
         }
     }
 
@@ -172,7 +249,7 @@ public class expensetracker {
         }
     }
 
-    // 🔹 Save to File
+    // 🔹 Save
     static void saveExpenses() {
 
         try {
@@ -189,7 +266,7 @@ public class expensetracker {
         }
     }
 
-    // 🔹 Load from File
+    // 🔹 Load
     static void loadExpenses() {
 
         try {
@@ -204,12 +281,12 @@ public class expensetracker {
                 String line = fileScanner.nextLine();
                 String[] data = line.split(",");
 
-                String name = data[0];
-                double amount = Double.parseDouble(data[1]);
-                String category = data[2];
-                String date = data[3];
-
-                expenses.add(new Expense(name, amount, category, date));
+                expenses.add(new Expense(
+                        data[0],
+                        Double.parseDouble(data[1]),
+                        data[2],
+                        data[3]
+                ));
             }
 
             fileScanner.close();
