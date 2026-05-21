@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Smart AI Expense Tracker</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <!-- CHART JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <!-- PROFILE -->
+
+        <div class="profile">
+
+            <img src=
+"https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+
+            <h3>Aravinda</h3>
+
+        </div>
+
+        <!-- TITLE -->
+
+        <h2>Expense AI</h2>
+
+        <!-- BALANCE -->
+
+        <div class="card balance-card">
+
+            <h3>Total Balance</h3>
+
+            <h1 id="balance">₹0</h1>
+
+        </div>
+
+        <!-- BUDGET -->
+
+        <div class="card">
+
+            <h3>Monthly Budget Left</h3>
+
+            <h1 id="budgetLeft">₹10000</h1>
+
+        </div>
+
+        <!-- AI INSIGHTS -->
+
+        <div class="card insight-card">
+
+            <h3>AI Insights</h3>
+
+            <p id="aiMessage">
+
+                Add expenses to generate AI insights.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main">
+
+        <!-- TOP SECTION -->
+
+        <div class="top-section">
+
+            <!-- SEARCH -->
+
+            <input type="text"
+                   id="search"
+                   placeholder="Search Expense..."
+                   onkeyup="searchExpense()">
+
+            <!-- TITLE -->
+
+            <input type="text"
+                   id="title"
+                   placeholder="Expense Title">
+
+            <!-- AMOUNT -->
+
+            <input type="number"
+                   id="amount"
+                   placeholder="Amount">
+
+            <!-- DATE -->
+
+            <input type="date"
+                   id="date">
+
+            <!-- CATEGORY -->
+
+            <select id="category">
+
+                <option>Food</option>
+
+                <option>Travel</option>
+
+                <option>Shopping</option>
+
+                <option>Bills</option>
+
+                <option>Entertainment</option>
+
+            </select>
+
+            <!-- VOICE BUTTON -->
+
+            <button onclick="startVoice()">
+
+                🎤 Voice
+
+            </button>
+
+            <!-- THEME BUTTON -->
+
+            <button onclick="toggleTheme()">
+
+                🌙 Theme
+
+            </button>
+
+            <!-- EXPORT PDF -->
+
+            <button onclick="window.print()">
+
+                📄 Export PDF
+
+            </button>
+
+            <!-- ADD EXPENSE -->
+
+            <button onclick="addExpense()">
+
+                Add Expense
+
+            </button>
+
+        </div>
+
+        <!-- GRAPH -->
+
+        <div class="graph-box">
+
+            <h2>AI Expense Analytics</h2>
+
+            <canvas id="expenseChart"></canvas>
+
+        </div>
+
+        <!-- RECENT TRANSACTIONS -->
+
+        <div class="card recent-card">
+
+            <h2>Recent Transactions</h2>
+
+            <ul id="recentList"></ul>
+
+        </div>
+
+        <!-- TABLE -->
+
+        <div class="expense-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Title</th>
+
+                        <th>Category</th>
+
+                        <th>Amount</th>
+
+                        <th>Date</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="expenseList"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- JAVASCRIPT -->
+
+<script src="main.js"></script>
+
+</body>
+
+</html>
